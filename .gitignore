@@ -3,3 +3,5 @@
 myenv
 .vscode/
 *.pdf
+*.pycache/
+__pycache__/
