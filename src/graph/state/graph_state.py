@@ -23,3 +23,15 @@ class ResumeState(TypedDict, total = False):
     matched_skills : Optional[List[str]]
     missing_skills : Optional[List[str]]
     role_inferred: str
+
+    ## Project Evaluator
+    project_score: float
+    project_tech_stack: Optional[List[str]]
+    projects_section: str
+
+    ## Education Evaluator
+    education_score: float
+    degrees: Optional[List[str]]
+    institutions: Optional[List[str]]
+    
+    
