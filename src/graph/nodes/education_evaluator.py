@@ -41,8 +41,12 @@ Resume Text:
     messages = prompt.format_messages(resume=resume_text)
     result: EducationEval = llm.invoke(messages)
 
-    state["education_score"] = float(result.education_score)
-    state["degrees"] = result.degrees
-    state["institutions"] = result.institutions
+    # state["education_score"] = float(result.education_score)
+    # state["degrees"] = result.degrees
+    # state["institutions"] = result.institutions
 
-    return state
+    return {
+        "education_score": float(result.education_score),
+        "degrees": list(result.degrees or []),
+        "institutions": list(result.institutions or []),
+    }

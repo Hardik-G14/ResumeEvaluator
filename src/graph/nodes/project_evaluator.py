@@ -46,8 +46,12 @@ Candidate Resume:
     result: ProjectEval = llm.invoke(messages)
 
 
-    state["project_score"] = float(result.project_score)
-    state["projects_section"] = "\n".join(result.projects_summary)
-    state["project_tech_stack"] = list(result.tech_stack)
+    # state["project_score"] = float(result.project_score)
+    # state["projects_section"] = "\n".join(result.projects_summary)
+    # state["project_tech_stack"] = list(result.tech_stack)
 
-    return state
+    return {
+        "project_score" : float(result.project_score),
+    "projects_section" :"\n".join(result.projects_summary),
+    "project_tech_stack" : list(result.tech_stack)
+    }
