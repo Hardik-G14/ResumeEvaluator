@@ -21,6 +21,11 @@ LLM_MODEL = CONFIG["llm"]["model"]
 LLM_TEMPERATURE = CONFIG["llm"]["temperature"]
 LLM_MAX_TOKENS = CONFIG["llm"]["max_tokens"]
 
+WEIGHT_SKILLS = CONFIG["weights"]["skills"]
+WEIGHT_EXPERIENCE = CONFIG["weights"]["experience"]
+WEIGHT_PROJECTS = CONFIG["weights"]["projects"]
+WEIGHT_EDUCATION = CONFIG["weights"]["education"]
+
 # This is where .env and yaml connect 👇
 LLM_API_KEY = os.getenv(CONFIG["llm"]["api_key_env"])  # → "OPENAI_API_KEY"
 if LLM_API_KEY is None:
