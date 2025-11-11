@@ -4,6 +4,7 @@ from typing import TypedDict, Optional, List
 class ResumeState(TypedDict, total = False):
     pdf_path: str
     resume_text: str
+    target_role: str
 
     ## Sections
     skills_section: str
@@ -37,6 +38,18 @@ class ResumeState(TypedDict, total = False):
     ## Achievements Evaluator
     achievements: List[str]
     achievement_score: float
+
+    ## Experience Evaluator
+    experience_score: float
+    total_experience: float
+    companies: Optional[List[str]]
+    job_switch_pattern: str
+    best_fit_role: str
+
+    ## Summary
+    final_summary: str
+    is_suitable: str
+    suitability_reason: str
 
     ## Final score after evaluation
     final_score: float

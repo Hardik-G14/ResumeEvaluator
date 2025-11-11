@@ -3,6 +3,7 @@ import streamlit as st
 from datetime import datetime
 from src.graph.stategraph import create_graph
 from src.graph.state.graph_state import ResumeState
+from src.utils.llm_utils import get_llm, validate_role
 
 # Define upload folder (inside data/)
 UPLOAD_DIR = "src/data/uploads"
@@ -19,12 +20,23 @@ st.markdown(
     - 💡 Skills  
     - 💼 Project Experience  
     - 🎓 Education Background  
+    - 🧑‍💻 Experience
+
     The results will include inferred role, evaluator scores, and AI-generated insights.
     """
 )
 
 # --- File Uploader ---
 uploaded_file = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
+user_role = st.text_input("Enter the role you want to analyze this resume for:")
+
+if user_role:
+    result = validate_role(user_role)
+    if result!=False:
+        st.success(f"✅ Valid role detected: **{result}**")
+    else:
+        st.warning("⚠️ Invalid or unrecognized role. Please enter a valid professional job title.")
+        st.stop()
 
 if uploaded_file is not None:
     # --- Save file to data folder ---
@@ -40,6 +52,7 @@ if uploaded_file is not None:
     state: ResumeState = {
         "pdf_path": file_path
     }
+    state["target_role"] = user_role
 
     # --- Create Graph ---
     graph = create_graph()
@@ -82,6 +95,26 @@ if uploaded_file is not None:
 
             if "missing_skills" in result_state:
                 st.write("**Missing Skills:** ", ", ".join(result_state.get("missing_skills", [])))
+
+            st.divider()
+
+             # ============ 🧑‍💻 EXPERIENCE EVALUATION ============
+            st.subheader("🧑‍💻 Experience Evaluation")
+            if "experience_score" in result_state:
+                st.progress(result_state.get("experience_score", 0.0))
+                st.write(f"**Experience Score:** {result_state.get('experience_score', 0.0) * 100:.1f}%")
+
+            if "total_experience" in result_state:
+                st.write(f"**Total expreience:** {result_state.get('total_experience', 0.0) * 1:.1f} years")
+
+            if "best_fit_role" in result_state:
+                st.write(f"**Inferred Role:** {result_state.get('best_fit_role', 'Unknown')}")
+
+            if "companies" in result_state:
+                st.write("**Companies:** ", ", ".join(result_state.get("companies", [])))
+
+            if "job_switch_pattern" in result_state:
+                st.write(f"**Job switch pattern:** {result_state.get('job_switch_pattern', 'Unknown')}")    
 
             st.divider()
 
@@ -138,6 +171,26 @@ if uploaded_file is not None:
                 st.write(f"**Bonus Score Added:** {result_state.get('achievement_score',0)*100:.1f}%")
             else:
                 st.write("No notable achievements detected.")
+
+            st.divider()
+
+            # ============ 🧾 SUMMARY ============
+            st.subheader("🧾 Summary")
+            final_summary = result_state.get("final_summary", None)
+            is_suitable = result_state.get("is_suitable", None)
+            suitability_reason = result_state.get("suitability_reason", None)
+
+            if final_summary:
+                st.write(f"**Final summary:** {final_summary}")
+            
+            if is_suitable:
+                st.write(f"**Is it suitable? :** {is_suitable}")
+
+            if suitability_reason:
+                st.write(f"**Reason:** {suitability_reason}")
+
+
+            st.divider()
 
             # ============ 🧠 FULL OUTPUT ============
             with st.expander("🧠 Full State Output"):

@@ -1,5 +1,5 @@
 # ================================================================
-# 🔧 Resume Evaluator Configuration
+# Resume Evaluator Configuration
 # ================================================================
 
 app:
@@ -8,7 +8,7 @@ app:
   description: "AI-powered resume evaluation pipeline using LangGraph + Streamlit"
 
 # ================================================================
-# 🤖 LLM Configuration
+# LLM Configuration
 # ================================================================
 llm:
   provider: "openai" # You can later support others (anthropic, ollama, etc.)
@@ -18,7 +18,7 @@ llm:
   api_key_env: "OPENAI_API_KEY" # Key from your .env file
 
 # ================================================================
-# ⚙️ Weights for Score Aggregation
+#  Weights for Score Aggregation
 # ================================================================
 weights:
   skills: 0.4
@@ -27,14 +27,14 @@ weights:
   education: 0.1
 
 # ================================================================
-# 🎯 Evaluation Thresholds
+#  Evaluation Thresholds
 # ================================================================
 thresholds:
   fit_cutoff: 0.75 # Above this = "Fit"
   warning_cutoff: 0.5 # Between this and fit_cutoff = "Borderline"
 
 # ================================================================
-# 📂 Data Paths
+#  Data Paths
 # ================================================================
 paths:
   resumes_dir: "src/data/sample_resumes"
@@ -42,7 +42,7 @@ paths:
   outputs_dir: "src/data/outputs"
 
 # ================================================================
-# 🧾 Logging Configuration
+#  Logging Configuration
 # ================================================================
 logging:
   level: "INFO"

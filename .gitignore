@@ -6,3 +6,4 @@ myenv
 *.pycache/
 __pycache__/
 *.pyc
+/venv
